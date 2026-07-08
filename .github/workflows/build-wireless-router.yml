@@ -560,6 +560,16 @@ jobs:
             echo "❎ 未启用 luci-app-store"
           fi
 
+      - name: Inject TR3000 custom packages
+        run: |
+          if [ -f TR3000-PACKAGES.txt ]; then
+            CUSTOM=$(grep -vE '^\s*#|^\s*$|^##' TR3000-PACKAGES.txt | tr '\n' ' ')
+            echo "CUSTOM_PACKAGES=\"\$CUSTOM_PACKAGES $CUSTOM\"" >> shell/custom-packages.sh
+            echo "✅ Injected TR3000 packages: ${CUSTOM:0:200}..."
+          else
+            echo "⚠️ TR3000-PACKAGES.txt not found, using defaults"
+          fi
+
 
       - name: Build Wireless ImmortalWrt
         run: |
