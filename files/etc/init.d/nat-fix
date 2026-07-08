@@ -1,0 +1,11 @@
+#!/bin/sh /etc/rc.common
+START=10
+STOP=90
+
+start() {
+    /etc/firewall.user
+}
+
+boot() {
+    /etc/firewall.user
+}

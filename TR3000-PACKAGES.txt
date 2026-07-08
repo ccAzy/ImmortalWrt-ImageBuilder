@@ -1,0 +1,39 @@
+# TR3000 预装包清单
+
+## 在 ImageBuilder workflow 中输入以下包名：
+
+### 系统
+bash coreutils-nohup curl htop nano
+
+### LuCI 界面
+luci-ssl-openssl luci-theme-bootstrap luci-theme-aurora luci-app-aurora-config luci-i18n-aurora-config-zh-cn
+
+### 网络
+ip-full iptables-nft iptables-mod-conntrack-extra iptables-mod-extra iptables-mod-filter iptables-mod-hashlimit iptables-mod-iface iptables-mod-ipmark iptables-mod-ipopt iptables-mod-iprange iptables-mod-ipv4options iptables-mod-nat-extra iptables-mod-proto iptables-mod-tee iptables-mod-tproxy iptables-mod-u32 conntrack ethtool
+
+### DNS/代理
+luci-app-openclash adguardhome dns2socks chinadns-ng ipt2socks
+
+### 加速
+luci-app-turboacc-mtk luci-i18n-turboacc-mtk-zh-cn
+
+### WiFi
+luci-app-mtwifi-cfg
+
+### 服务
+ttyd luci-app-ttyd luci-i18n-ttyd-zh-cn miniupnpd-nftables luci-app-upnp luci-i18n-upnp-zh-cn
+
+### 存储
+block-mount automount kmod-fs-exfat kmod-fs-ntfs3 ntfs3-mount kmod-usb-storage-uas
+
+### 工具
+iw iwinfo e2fsprogs
+
+### 监控
+luci-app-bandix luci-i18n-bandix-zh-cn luci-app-wrtbwmon luci-app-eqos-mtk htop
+
+### 防火墙
+firewall4 luci-app-firewall
+
+### 其他
+bash coreutils

@@ -1,0 +1,11 @@
+# TR3000 手动防火墙规则 (fw4 损坏时的应急方案)
+iptables -F FORWARD
+iptables -t nat -F POSTROUTING
+
+# NAT 伪装
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+# 转发
+iptables -A FORWARD -i br-lan -o eth0 -j ACCEPT
+iptables -A FORWARD -i eth0 -o br-lan -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
