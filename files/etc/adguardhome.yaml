@@ -6,7 +6,7 @@ http:
   session_ttl: 720h
 users:
   - name: admin
-    password: $2b$10$hd3pDHr7kA2Pj32clGz1febJwXxU9UVRPk/lwquOOdZBL3KOOWtTK
+    password: ""
 auth_attempts: 5
 block_auth_min: 15
 http_proxy: ""
