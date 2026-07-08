@@ -644,6 +644,11 @@ jobs:
               -v "${{ github.workspace }}/custom:/home/build/immortalwrt/files/etc/config" \
               -v "${{ github.workspace }}/arch/arch.conf:/home/build/immortalwrt/files/etc/opkg/arch.conf" \
               -v "${{ github.workspace }}/shell:/home/build/immortalwrt/shell" \
+              -v "${{ github.workspace }}/files/etc/sysctl.conf:/home/build/immortalwrt/files/etc/sysctl.conf" \
+              -v "${{ github.workspace }}/files/etc/firewall.user:/home/build/immortalwrt/files/etc/firewall.user" \
+              -v "${{ github.workspace }}/files/etc/init.d/nat-fix:/home/build/immortalwrt/files/etc/init.d/nat-fix" \
+              -v "${{ github.workspace }}/files/etc/adguardhome.yaml:/home/build/immortalwrt/files/etc/adguardhome.yaml" \
+              -v "${{ github.workspace }}/files/etc/config/adguardhome:/home/build/immortalwrt/files/etc/config/adguardhome" \
               -v "${{ github.workspace }}/mediatek-filogic/build24.sh:/home/build/immortalwrt/build.sh" \
               -e PROFILE=$profile \
               -e INCLUDE_DOCKER=$include_docker \
