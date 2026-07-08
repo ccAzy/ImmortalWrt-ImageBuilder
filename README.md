@@ -28,6 +28,20 @@
 > 8、支持24.10.x 、25.12.x 等版本 （包括x86-64-ISO、x86-64、rockchip、全志sunxi、无线路由器）
 
 ## [基本用法步骤](https://github.com/wukongdaily/AutoBuildImmortalWrt/wiki) 👈🏻
+
+### 🚀 Cudy TR3000 快速构建
+
+本项目已针对 **Cudy TR3000 v1 (ubootmod)** 预配置：
+
+1. Actions → **Build 24.10.x Wireless Router** → Run workflow
+2. 机型选 `cudy_tr3000-v1-ubootmod`
+3. 管理地址填 `192.168.6.1`（默认）
+4. 包列表自动从 `TR3000-PACKAGES.txt` 注入
+5. 自定义配置自动从 `files/etc/` 和 `custom/` 打包
+
+**预装**: OpenClash / AdGuardHome / ttyd / UPnP / T7 存储支持 / TCP 诊断工具
+
+**自定义配置**: 内核优化 / 防火墙双保险 / DNS 链路 / AdGuard 持久化
 1、fork本项目<br>
 2、在fork后的项目中 点击【action】 找到需要的工作流后 run-workflow<br>
 
