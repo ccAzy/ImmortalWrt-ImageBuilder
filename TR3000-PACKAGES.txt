@@ -1,18 +1,42 @@
-# TR3000 预装包清单 (v2 - 24.10.6 兼容版)
-# 仅包含在 24.10.6 官方仓库确认存在的包
+# TR3000 预装包清单 (v3 - 全量版)
+# 24.10.6 官方仓库确认存在的包
 
+## 系统工具
 bash coreutils coreutils-nohup curl wget-ssl htop nano
 
-luci-ssl-openssl luci-theme-argon luci-theme-aurora luci-app-argon-config luci-i18n-argon-config-zh-cn
+## LuCI 界面
+luci-ssl-openssl luci-theme-bootstrap luci-theme-argon luci-theme-aurora luci-app-argon-config luci-i18n-argon-config-zh-cn
 
+## 网络
 ip-full iptables-nft iptables-mod-conntrack-extra iptables-mod-extra iptables-mod-filter iptables-mod-hashlimit iptables-mod-iface iptables-mod-ipmark iptables-mod-ipopt iptables-mod-iprange iptables-mod-ipv4options iptables-mod-nat-extra iptables-mod-proto iptables-mod-tee iptables-mod-tproxy iptables-mod-u32 conntrack ethtool
 
-luci-app-openclash adguardhome
+## DNS/代理
+luci-app-openclash adguardhome dns2socks chinadns-ng ipt2socks
 
+## 服务
 ttyd luci-app-ttyd luci-i18n-ttyd-zh-cn miniupnpd-nftables luci-app-upnp luci-i18n-upnp-zh-cn
 
+## 存储 (T7)
 block-mount automount kmod-fs-exfat kmod-fs-ntfs3 ntfs3-mount kmod-usb-storage-uas e2fsprogs
 
-tcpdump tcping
+## NAS (ksmbd Windows网上邻居)
+ksmbd-server luci-app-ksmbd luci-i18n-ksmbd-zh-cn wsdd2
 
+## 网络诊断
+tcpdump tcping iperf3 mtr
+
+## 其他
+luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn ddns-scripts ddns-scripts-services
+
+## 监控
+luci-app-bandix luci-i18n-bandix-zh-cn
+
+## 防火墙
 firewall4 luci-app-firewall
+
+## ⚠️ 以下 MTK 专用包不在 24.10.6 源，刷完手动装:
+## luci-app-turboacc-mtk luci-i18n-turboacc-mtk-zh-cn
+## luci-app-mtwifi-cfg  
+## luci-app-wrtbwmon
+## luci-app-eqos-mtk
+## luci-app-aurora-config luci-i18n-aurora-config-zh-cn
