@@ -1,39 +1,48 @@
-# TR3000 预装包清单
+# TR3000 预装包清单 — 从路由器现有 + immortalwrt 项目精选
 
-## 在 ImageBuilder workflow 中输入以下包名：
+## 系统工具
+bash coreutils coreutils-nohup curl wget-ssl htop nano
 
-### 系统
-bash coreutils-nohup curl htop nano
+## LuCI 界面
+luci-ssl-openssl luci-theme-bootstrap luci-theme-argon luci-theme-aurora luci-app-aurora-config luci-i18n-aurora-config-zh-cn luci-app-argon-config
 
-### LuCI 界面
-luci-ssl-openssl luci-theme-bootstrap luci-theme-aurora luci-app-aurora-config luci-i18n-aurora-config-zh-cn
-
-### 网络
+## 网络
 ip-full iptables-nft iptables-mod-conntrack-extra iptables-mod-extra iptables-mod-filter iptables-mod-hashlimit iptables-mod-iface iptables-mod-ipmark iptables-mod-ipopt iptables-mod-iprange iptables-mod-ipv4options iptables-mod-nat-extra iptables-mod-proto iptables-mod-tee iptables-mod-tproxy iptables-mod-u32 conntrack ethtool
 
-### DNS/代理
-luci-app-openclash adguardhome dns2socks chinadns-ng ipt2socks
+## DNS/代理
+luci-app-openclash adguardhome
 
-### 加速
+## 加速
 luci-app-turboacc-mtk luci-i18n-turboacc-mtk-zh-cn
 
-### WiFi
+## WiFi
 luci-app-mtwifi-cfg
 
-### 服务
+## 服务
 ttyd luci-app-ttyd luci-i18n-ttyd-zh-cn miniupnpd-nftables luci-app-upnp luci-i18n-upnp-zh-cn
 
-### 存储
-block-mount automount kmod-fs-exfat kmod-fs-ntfs3 ntfs3-mount kmod-usb-storage-uas
+## 存储/NAS (T7)
+block-mount automount kmod-fs-exfat kmod-fs-ntfs3 ntfs3-mount kmod-usb-storage-uas e2fsprogs
+ksmbd-server luci-app-ksmbd luci-i18n-ksmbd-zh-cn wsdd2
 
-### 工具
-iw iwinfo e2fsprogs
+## 网络诊断
+tcpdump tcping iperf3 mtr
 
-### 监控
-luci-app-bandix luci-i18n-bandix-zh-cn luci-app-wrtbwmon luci-app-eqos-mtk htop
+## 其他工具
+luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn ddns-scripts ddns-scripts-services
 
-### 防火墙
+## 监控
+luci-app-bandix luci-i18n-bandix-zh-cn luci-app-wrtbwmon luci-app-eqos-mtk
+
+## 防火墙
 firewall4 luci-app-firewall
 
-### 其他
-bash coreutils
+## 主题
+luci-theme-argon luci-theme-aurora
+
+## 说明
+# ksmbd: Windows网上邻居直接访问T7硬盘
+# wsdd2: Win10/11 网络发现, 让T7在"网络"里出现
+# tcpdump+tcping+iperf3+mtr: 网络排障四件套
+# luci-app-wol: 远程唤醒家里电脑
+# luci-app-ddns: 动态域名(需要时用)
