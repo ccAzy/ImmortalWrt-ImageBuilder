@@ -1,5 +1,5 @@
-# TR3000 预装包清单 (v3 - 全量版)
-# 24.10.6 官方仓库确认存在的包
+# TR3000 预装包清单 (v4 - 含 Kwrt 源)
+# 官方 24.10.6 + dl.openwrt.ai/kiddin9 仓库
 
 ## 系统工具
 bash coreutils coreutils-nohup curl wget-ssl htop nano
@@ -19,24 +19,24 @@ ttyd luci-app-ttyd luci-i18n-ttyd-zh-cn miniupnpd-nftables luci-app-upnp luci-i1
 ## 存储 (T7)
 block-mount automount kmod-fs-exfat kmod-fs-ntfs3 ntfs3-mount kmod-usb-storage-uas e2fsprogs
 
-## NAS (ksmbd Windows网上邻居)
+## NAS (ksmbd)
 ksmbd-server luci-app-ksmbd luci-i18n-ksmbd-zh-cn wsdd2
 
 ## 网络诊断
 tcpdump tcping iperf3 mtr
 
-## 其他
+## DDNS+WOL
 luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn ddns-scripts ddns-scripts-services
 
 ## 监控
 luci-app-bandix luci-i18n-bandix-zh-cn
 
+## Kwrt 源 (dl.openwrt.ai)
+luci-app-wrtbwmon wrtbwmon
+luci-app-eqosplus
+
 ## 防火墙
 firewall4 luci-app-firewall
 
-## ⚠️ 以下 MTK 专用包不在 24.10.6 源，刷完手动装:
-## luci-app-turboacc-mtk luci-i18n-turboacc-mtk-zh-cn
-## luci-app-mtwifi-cfg  
-## luci-app-wrtbwmon
-## luci-app-eqos-mtk
-## luci-app-aurora-config luci-i18n-aurora-config-zh-cn
+## ⚠️ 暂无源的包 (源码编译独有):
+## luci-app-turboacc-mtk  luci-app-mtwifi-cfg
