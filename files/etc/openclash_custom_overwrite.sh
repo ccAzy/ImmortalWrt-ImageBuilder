@@ -1,28 +1,15 @@
 #!/bin/sh
-# TR3000 自定义初始化
-# 首次刷入后执行
-
-# 确保 nat-fix 可执行
-chmod +x /etc/init.d/nat-fix
-
-# 启用 nat-fix 和 firewall 自启
-[ -x /etc/init.d/nat-fix ] && /etc/init.d/nat-fix enable
-[ -x /etc/init.d/firewall ] && /etc/init.d/firewall enable
-
-# 临时修复内核模块不匹配（不阻塞启动）
-sed -i 's/kmod-nft-core//g' /etc/config/firewall 2>/dev/null
-
-# === OpenClash 优化守护 ===
-# 创建覆写脚本，每次 OpenClash 重载配置后自动应用优化
-cat > /etc/openclash/custom/openclash_custom_overwrite.sh << 'OCEOF'
-#!/bin/sh
 . /usr/share/openclash/ruby.sh
 . /usr/share/openclash/log.sh
 . /lib/functions.sh
 
+# This script is called by /etc/init.d/openclash
+# Add your custom overwrite scripts here, they will be take effict after the OpenClash own srcipts
+
 LOG_TIP "Start Running Custom Overwrite Scripts..."
 LOGTIME=$(echo $(date "+%Y-%m-%d %H:%M:%S"))
 
+# === TR3000 优化守护 (2026-07-09) ===
 YAML="/etc/openclash/config/良心云.yaml"
 
 # 关闭 unified-delay
@@ -57,8 +44,4 @@ if ! grep -q "fake-ip-filter:" "$YAML"; then
 fi
 
 LOG_TIP "TR3000 OpenClash 优化守护完成"
-exit 0
-OCEOF
-chmod +x /etc/openclash/custom/openclash_custom_overwrite.sh
-
 exit 0
