@@ -24,17 +24,17 @@ block-mount automount kmod-fs-exfat kmod-fs-ntfs3 ntfs3-mount kmod-usb-storage-u
 ksmbd-server luci-app-ksmbd luci-i18n-ksmbd-zh-cn wsdd2
 
 ## 网络诊断
-tcpdump tcping iperf3 mtr-json
+tcpdump tcping
 
 ## DDNS+WOL
-luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn ddns-scripts ddns-scripts-services
+luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn ddns-scripts
 
 ## 监控
 luci-app-bandix luci-i18n-bandix-zh-cn
 
 ## Kwrt 源 (dl.openwrt.ai)
 luci-app-wrtbwmon wrtbwmon
-luci-app-eqosplus
+## luci-app-eqosplus (大, 先注释)
 
 ## 防火墙
 firewall4 luci-app-firewall
