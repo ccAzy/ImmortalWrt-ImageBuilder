@@ -110,11 +110,18 @@ fi
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Building image with the following packages:"
 echo "$PACKAGES"
 
-make image PROFILE=$PROFILE PACKAGES="$PACKAGES" FILES="/home/build/immortalwrt/files" SQUASHFSOPT="-b 256k -comp xz -Xbcj arm"
+
+
+# 打包前压缩: strip 二进制 + 删非中文语言
+find /home/build/immortalwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/ -name "*.lmo" ! -name "*zh-cn*" -delete 2>/dev/null || true
+find /home/build/immortalwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/ -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
+
+make image PROFILE=$PROFILE PACKAGES="$PACKAGES" FILES="/home/build/immortalwrt/files" SQUASHFSOPT="-b 256k -comp xz -Xbcj arm -noappend"
 
 if [ $? -ne 0 ]; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Build failed!"
     exit 1
+else
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Build completed successfully."
 fi
 
-echo "$(date '+%Y-%m-%d %H:%M:%S') - Build completed successfully."
