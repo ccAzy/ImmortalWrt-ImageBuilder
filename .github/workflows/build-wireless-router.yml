@@ -570,6 +570,17 @@ jobs:
             echo "⚠️ TR3000-PACKAGES.txt not found, using defaults"
           fi
 
+      - name: Add Kwrt 3rd-party feed
+        run: |
+          echo 'src/gz kwrt_packages https://dl.openwrt.ai/packages-24.10/aarch64_cortex-a53/kiddin9/' > shell/kwrt-feed.conf
+          echo "✅ Added Kwrt feed"
+
+      - name: Update TR3000-PACKAGES with Kwrt packages
+        run: |
+          # 如果 Kwrt 仓库有的包，去掉注释标记
+          sed -i 's/^## //' TR3000-PACKAGES.txt 2>/dev/null || true
+          echo "✅ Updated package list with Kwrt packages"
+
 
       - name: Build Wireless ImmortalWrt
         run: |

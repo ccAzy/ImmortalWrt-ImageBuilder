@@ -22,6 +22,11 @@ sed -i '1i\
 arch aarch64_generic 10\n\
 arch aarch64_cortex-a53 15' repositories.conf
 
+# 添加 Kwrt 第三方包源 (wrtbwmon/eqos 等)
+if [ -f shell/kwrt-feed.conf ]; then
+  cat shell/kwrt-feed.conf >> repositories.conf
+  echo "✅ Kwrt feed added"
+fi
 
 
 # yml 传入的路由器型号 PROFILE
