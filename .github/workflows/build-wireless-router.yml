@@ -692,7 +692,7 @@ jobs:
           name: ImmortalWrt-Wireless
           body_path: ${{ github.workspace }}/mediatek-filogic/info.md
           files: |
-            ${{ github.workspace }}/bin/targets/${{ env.platform }}/*
+            ${{ github.workspace }}/bin/targets/${{ env.platform }}/*sysupgrade*
           token: ${{ secrets.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
