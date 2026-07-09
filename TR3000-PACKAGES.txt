@@ -32,9 +32,9 @@ luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn ddns-scripts
 ## 监控
 luci-app-bandix luci-i18n-bandix-zh-cn
 
-## Kwrt 源 (dl.openwrt.ai)
-luci-app-wrtbwmon wrtbwmon
-## luci-app-eqosplus (大, 先注释)
+## Kwrt 源 (dl.openwrt.ai) - feed连不上, 报Cannot install
+## luci-app-wrtbwmon wrtbwmon
+## luci-app-eqosplus
 
 ## 防火墙
 firewall4 luci-app-firewall
