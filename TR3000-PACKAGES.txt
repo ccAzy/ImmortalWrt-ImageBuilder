@@ -5,7 +5,8 @@
 bash coreutils coreutils-nohup curl wget-ssl htop nano
 
 ## LuCI 界面
-luci-ssl-openssl luci-theme-bootstrap luci-theme-argon ## luci-theme-aurora luci-app-argon-config luci-i18n-argon-config-zh-cn
+luci-ssl-openssl luci-theme-bootstrap luci-theme-argon luci-app-argon-config luci-i18n-argon-config-zh-cn
+luci-theme-aurora
 
 ## 网络
 ip-full iptables-nft iptables-mod-conntrack-extra iptables-mod-extra iptables-mod-filter iptables-mod-hashlimit iptables-mod-iface iptables-mod-ipmark iptables-mod-ipopt iptables-mod-iprange iptables-mod-ipv4options iptables-mod-nat-extra iptables-mod-proto iptables-mod-tee iptables-mod-tproxy iptables-mod-u32 conntrack ethtool
@@ -29,7 +30,7 @@ tcpdump tcping iperf3 mtr-json
 luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn ddns-scripts ddns-scripts-services
 
 ## 监控
-## luci-app-bandix luci-i18n-bandix-zh-cn
+luci-app-bandix luci-i18n-bandix-zh-cn
 
 ## Kwrt 源 (dl.openwrt.ai) - 暂不可用, feed未集成
 ## luci-app-wrtbwmon wrtbwmon
