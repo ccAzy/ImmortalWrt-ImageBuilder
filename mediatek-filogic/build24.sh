@@ -116,7 +116,7 @@ echo "$PACKAGES"
 find /home/build/immortalwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/ -name "*.lmo" ! -name "*zh-cn*" -delete 2>/dev/null || true
 find /home/build/immortalwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/ -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
 
-make image PROFILE=$PROFILE PACKAGES="$PACKAGES" FILES="/home/build/immortalwrt/files" SQUASHFSOPT="-b 256k -comp xz -Xbcj arm -noappend"
+make image PROFILE=$PROFILE PACKAGES="$PACKAGES" FILES="/home/build/immortalwrt/files" SQUASHFSOPT="-b 256k -comp xz -Xbcj arm -noappend -Xdict-size 1M"
 
 if [ $? -ne 0 ]; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: Build failed!"
