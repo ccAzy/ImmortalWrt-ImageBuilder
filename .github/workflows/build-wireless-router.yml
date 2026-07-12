@@ -575,6 +575,13 @@ jobs:
           echo 'src/gz kwrt_packages https://dl.openwrt.ai/packages-24.10/aarch64_cortex-a53/kiddin9/' > shell/kwrt-feed.conf
           echo "✅ Added Kwrt feed"
 
+      - name: Cache OpenClash files
+        uses: actions/cache@v4
+        with:
+          path: files/etc/openclash
+          key: openclash-${{ runner.os }}-${{ hashFiles('mediatek-filogic/build24.sh') }}
+          restore-keys: openclash-${{ runner.os }}-
+
 
       - name: Build Wireless ImmortalWrt
         run: |
@@ -663,6 +670,7 @@ jobs:
               -v "${{ github.workspace }}/files/etc/firewall.user:/home/build/immortalwrt/files/etc/firewall.user" \
               -v "${{ github.workspace }}/files/etc/init.d/nat-fix:/home/build/immortalwrt/files/etc/init.d/nat-fix" \
               -v "${{ github.workspace }}/files/etc/adguardhome.yaml:/home/build/immortalwrt/files/etc/adguardhome.yaml" \
+              -v "${{ github.workspace }}/files/etc/openclash:/home/build/immortalwrt/files/etc/openclash" \
               -v "${{ github.workspace }}/mediatek-filogic/build24.sh:/home/build/immortalwrt/build.sh" \
               -e PROFILE=$profile \
               -e INCLUDE_DOCKER=$include_docker \

@@ -1,11 +1,20 @@
 #!/bin/sh /etc/rc.common
-START=10
+# TR3000 应急 NAT — 仅在 fw4 故障时启用
+# 正常运行时 fw4 (nftables) 已处理所有规则，此脚本不应执行
+# 若 fw4 崩溃/丢失，此脚本提供最基础的 NAT 转发保底
+
+START=99
 STOP=90
 
 start() {
+    # fw4 正常则跳过, 避免冲掉 nftables 规则
+    if /etc/init.d/firewall enabled && /etc/init.d/firewall running 2>/dev/null; then
+        exit 0
+    fi
+    logger -t nat-fix "fw4 未运行, 启用应急 NAT 规则"
     /etc/firewall.user
 }
 
 boot() {
-    /etc/firewall.user
+    start
 }

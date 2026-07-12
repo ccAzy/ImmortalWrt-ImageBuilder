@@ -83,27 +83,79 @@ if [ "$INCLUDE_DOCKER" = "yes" ]; then
     echo "Adding package: luci-i18n-dockerman-zh-cn"
 fi
 
-# 若构建openclash 则添加内核
+# 若构建openclash 则添加内核 (带重试+校验+缓存复用)
 if echo "$PACKAGES" | grep -q "luci-app-openclash"; then
     echo "✅ 已选择 luci-app-openclash，添加 openclash core"
     mkdir -p files/etc/openclash/core
+
+    # 通用下载函数: 重试3次 + 校验非空
+    dl_retry() {
+      local url="$1" dst="$2" label="$3"
+      for i in 1 2 3; do
+        echo "  [$label] 下载 (第${i}次): $url"
+        wget -q --timeout=60 -O "$dst" "$url" && [ -s "$dst" ] && echo "  [$label] ✅ 成功" && return 0
+        echo "  [$label] ⚠️ 失败, ${i}/3"
+        sleep 5
+      done
+      echo "  [$label] ❌ 3次均失败, 继续构建(固件中 OpenClash 可能缺少内核/规则)"
+      return 1
+    }
+
+    # 缓存检查: GitHub Actions cache 恢复的文件跳过下载
+    cached_skip() {
+      local f="$1" label="$2"
+      if [ -s "$f" ]; then
+        echo "  [$label] ✅ 命中缓存 ($(wc -c < "$f") bytes), 跳过下载"
+        return 0
+      fi
+      return 1
+    }
+
     # Download clash_meta
-    META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
-    wget -qO- $META_URL | tar xOvz > files/etc/openclash/core/clash_meta
-    chmod +x files/etc/openclash/core/clash_meta
-    # Download GeoIP and GeoSite
-    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -O files/etc/openclash/GeoIP.dat
-    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O files/etc/openclash/GeoSite.dat
-    # Download latest openclash Client
-    URL=$(curl -s https://api.github.com/repos/vernesong/OpenClash/releases/latest \
+    if cached_skip files/etc/openclash/core/clash_meta "clash_meta"; then
+      chmod +x files/etc/openclash/core/clash_meta
+    else
+      META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
+      META_TMP=$(mktemp)
+      dl_retry "$META_URL" "$META_TMP" "clash_meta" && {
+        tar xOvz "$META_TMP" > files/etc/openclash/core/clash_meta 2>/dev/null
+        if [ -s files/etc/openclash/core/clash_meta ]; then
+          chmod +x files/etc/openclash/core/clash_meta
+          echo "  [clash_meta] ✅ 已解压 ($(wc -c < files/etc/openclash/core/clash_meta) bytes)"
+        else
+          echo "  [clash_meta] ❌ 解压为空, OpenClash 可能无法启动"
+        fi
+        rm -f "$META_TMP"
+      }
+    fi
+
+    # Download GeoIP and GeoSite (优先缓存)
+    cached_skip files/etc/openclash/GeoIP.dat "GeoIP" || \
+      dl_retry "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat" \
+        files/etc/openclash/GeoIP.dat "GeoIP"
+    cached_skip files/etc/openclash/GeoSite.dat "GeoSite" || \
+      dl_retry "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat" \
+        files/etc/openclash/GeoSite.dat "GeoSite"
+
+    # Download latest openclash ipk (不缓存 — 始终拉最新版)
+    echo "  [OpenClash ipk] 查询最新版本..."
+    URL=$(curl -s --connect-timeout 15 --retry 2 \
+      https://api.github.com/repos/vernesong/OpenClash/releases/latest \
       | grep "browser_download_url.*ipk" \
-      | head -n1 \
-      | cut -d '"' -f 4)
-    echo "OpenClash latest ipk: $URL"
-    wget "$URL" -P /home/build/immortalwrt/packages/
+      | head -n1 | cut -d '"' -f 4)
+    if [ -n "$URL" ]; then
+      echo "  [OpenClash ipk] URL: $URL"
+      dl_retry "$URL" "/home/build/immortalwrt/packages/$(basename "$URL")" "OpenClash ipk"
+    else
+      echo "  [OpenClash ipk] ❌ 获取下载地址失败(GitHub API 可能限流), 将使用仓库自带版本"
+    fi
 else
     echo "⚪️ 未选择 luci-app-openclash"
 fi
+
+# 打印文件清单供调试
+echo "📦 OpenClash 文件:"
+find files/etc/openclash/ -type f -exec ls -lh {} \; 2>/dev/null || echo "  (无)"
 
 
 # 构建镜像

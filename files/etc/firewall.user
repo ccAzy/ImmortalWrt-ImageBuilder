@@ -1,4 +1,6 @@
-# TR3000 手动防火墙规则 (fw4 损坏时的应急方案)
+# TR3000 应急防火墙规则 — 仅当 fw4 (nftables) 故障时由 nat-fix 调用
+# ⚠️ 此脚本会清空现有 iptables 规则，仅在 fw4 崩溃时作为兜底
+# 正常运行时不执行（nat-fix 会检测 fw4 状态后跳过）
 iptables -F FORWARD
 iptables -t nat -F POSTROUTING
 

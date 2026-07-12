@@ -25,6 +25,9 @@ config dnsmasq
 	option noresolv '1'
 	option localuse '1'
 	list server '127.0.0.1#7874'
+	# 备用 DNS — OpenClash 挂了也不断网
+	list server '223.5.5.5'
+	list server '119.29.29.29'
 
 config dhcp 'lan'
 	option interface 'lan'
