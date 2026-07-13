@@ -43,8 +43,7 @@ pppoe_account=${PPPOE_ACCOUNT}
 pppoe_password=${PPPOE_PASSWORD}
 EOF
 
-echo "cat pppoe-settings"
-cat /home/build/immortalwrt/files/etc/config/pppoe-settings
+echo "pppoe-settings created (password hidden for security)"
 
 # 输出调试信息
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting build process..."
@@ -164,9 +163,11 @@ echo "$PACKAGES"
 
 
 
-# 打包前压缩: strip 二进制 + 删非中文语言
+# 打包前压缩: 删非中文语言包 + strip 二进制（仅 /usr/bin /usr/sbin，跳过 .so）
 find /home/build/immortalwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/ -name "*.lmo" ! -name "*zh-cn*" -delete 2>/dev/null || true
-find /home/build/immortalwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/ -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
+find /home/build/immortalwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/usr/bin \
+     /home/build/immortalwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/usr/sbin \
+     -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
 
 make image PROFILE=$PROFILE PACKAGES="$PACKAGES" FILES="/home/build/immortalwrt/files" SQUASHFSOPT="-b 256k -comp xz -Xbcj arm -noappend -Xdict-size 1M"
 

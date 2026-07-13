@@ -30,6 +30,8 @@ tcpdump tcping
 luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn ddns-scripts
 
 ## 监控
+# bandix 依赖 Kwrt 源 (dl.openwrt.ai)，若 Kwrt feed 不可用则构建将失败
+# 如遇构建失败请注释此行
 luci-app-bandix luci-i18n-bandix-zh-cn
 
 ## Kwrt 源 (dl.openwrt.ai) - feed连不上, 报Cannot install
