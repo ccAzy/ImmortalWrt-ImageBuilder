@@ -576,7 +576,7 @@ jobs:
           echo "✅ Added Kwrt feed"
 
       - name: Cache OpenClash files
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: files/etc/openclash
           key: openclash-${{ runner.os }}-${{ hashFiles('mediatek-filogic/build24.sh') }}
